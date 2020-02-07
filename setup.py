@@ -37,8 +37,6 @@ log = logging.getLogger(__file__)
 if 'all' in sys.warnoptions:
     log.level = logging.DEBUG
 
-
-# Second try: use PDAL_CONFIG environment variable
 if 'PDAL_CONFIG' in os.environ:
     pdal_config = os.environ['PDAL_CONFIG']
     log.debug('pdal_config: %s', pdal_config)
@@ -166,7 +164,10 @@ if os.name in ['nt']:
 
     libraries = ['pdalcpp','pdal_util','ws2_32']
 
-    extra_compile_args = ['/DNOMINMAX',]
+    extra_compile_args += ['/DNOMINMAX',]
+    extra_compile_args += ['/wd4250']
+    extra_compile_args += ['/std:c++17']
+    extra_compile_args += ['/DNPY_NO_DEPRECATED_API=NPY_1_7_API_VERSION']
 
 if 'linux' in sys.platform or 'linux2' in sys.platform or 'darwin' in sys.platform:
     extra_compile_args += ['-std=c++11', '-Wno-unknown-pragmas']

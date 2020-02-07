@@ -66,7 +66,7 @@ cdef extern from "PyDimension.hpp":
     ctypedef struct Dimension:
         string name;
         string description;
-        int size;
+        size_t size;
         string type;
 ##         string units; // Not defined by PDAL yet
 
@@ -96,11 +96,6 @@ cdef class PyPipeline:
 
 
     def __cinit__(self, unicode json, list arrays=None):
-        cdef char* x = NULL
-        cdef int n_arrays;
-        if arrays:
-            n_arrays = len(arrays)
-
         cdef vector[Array*] c_arrays;
         cdef np.ndarray np_array;
         cdef Array* a

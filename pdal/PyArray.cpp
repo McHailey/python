@@ -230,7 +230,7 @@ PyObject* Array::buildNumpyDescription(PointViewPtr view) const
     {
         Dimension::Id id = dims[i];
         Dimension::Type t = view->dimType(id);
-        npy_intp stride = view->dimSize(id);
+        size_t stride = view->dimSize(id);
 
         std::string name = view->dimName(id);
 
@@ -248,7 +248,7 @@ PyObject* Array::buildNumpyDescription(PointViewPtr view) const
 
         std::stringstream oss;
         oss << kind << stride;
-        PyObject* pySize = PyLong_FromLong(stride);
+        PyObject* pySize = PyLong_FromLong(static_cast<long>(stride));
         PyObject* pyTitle = PyUnicode_FromString(name.c_str());
         PyObject* pyFormat = PyUnicode_FromString(oss.str().c_str());
 
